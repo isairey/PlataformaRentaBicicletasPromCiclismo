@@ -1,0 +1,41 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: rental-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: rental_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rental-service:
+    build: .
+    container_name: rental-service
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    environment:
+      MYSQL_URI: mysql+pymysql://user:password@mysql:3306/rental_db
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+      RABBITMQ_EXCHANGE: rentals
+      RABBITMQ_ROUTING_KEY: rental.started
+      BIKE_SERVICE_URL: http://host.docker.internal:8080
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - default
+      - broker_network
+
+networks:
+  broker_network:
+    external: true
+    name: broker_default

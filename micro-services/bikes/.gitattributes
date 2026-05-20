@@ -1,0 +1,5 @@
+# This is done to prevent Windows from messing up line endings in scripts for the app docker container!
+* text=auto
+*.sh text eol=lf
+*.py text eol=lf
+

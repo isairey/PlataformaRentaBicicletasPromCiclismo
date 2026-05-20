@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-rentals
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-rentals
+  template:
+    metadata:
+      labels:
+        app: mysql-rentals
+    spec:
+      containers:
+        - name: mysql-rentals
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "rootpass"
+            - name: MYSQL_DATABASE
+              value: "rental_db"
+            - name: MYSQL_USER
+              value: "rentals_user"
+            - name: MYSQL_PASSWORD
+              value: "rentals_pass"
+          ports:
+            - containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-rentals
+spec:
+  selector:
+    app: mysql-rentals
+  ports:
+    - port: 3306
+      targetPort: 3306

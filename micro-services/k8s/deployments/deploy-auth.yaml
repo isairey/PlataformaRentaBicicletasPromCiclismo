@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-auth
+  template:
+    metadata:
+      labels:
+        app: service-auth
+    spec:
+      containers:
+        - name: service-auth
+          image: mvasquezb99/service-auth:v1
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - secretRef:
+                name: secret-firebase
+            - secretRef:
+                name: secret-auth

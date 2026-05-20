@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-map
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-map
+  template:
+    metadata:
+      labels:
+        app: mysql-map
+    spec:
+      containers:
+        - name: mysql-map
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "rootpass"
+            - name: MYSQL_DATABASE
+              value: "geo_db"
+            - name: MYSQL_USER
+              value: "map_user"
+            - name: MYSQL_PASSWORD
+              value: "map_pass"
+          ports:
+            - containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-map
+spec:
+  selector:
+    app: mysql-map
+  ports:
+    - port: 3306
+      targetPort: 3306

@@ -1,0 +1,46 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bike-rental-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /auth(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: service-auth
+                port:
+                  number: 5000
+          - path: /bikes(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: service-bikes
+                port:
+                  number: 8080
+          - path: /events(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: service-events
+                port:
+                  number: 5000
+          - path: /map(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: service-map
+                port:
+                  number: 8081
+          - path: /rentals(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: service-rentals
+                port:
+                  number: 5000
