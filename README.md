@@ -233,7 +233,7 @@ Módulo de eventos.
 # 📂 Estructura del proyecto
 
 ```bash
-Bike-Network-System/
+PlataformaRentaBicicletasPromCiclismo/
 │
 ├── authentication/
 ├── bike-crud/
@@ -315,7 +315,7 @@ Usuario → Login → Reservar bicicleta → Mapa interactivo → Eventos
 ## 1️⃣ Clonar repositorio
 
 ```bash
-git clone https://github.com/camazog1/Bike-Network-System.git
+git clone https://github.com/isairey/PlataformaRentaBicicletasPromCiclismo.git
 ```
 
 ---
@@ -323,7 +323,7 @@ git clone https://github.com/camazog1/Bike-Network-System.git
 ## 2️⃣ Entrar al proyecto
 
 ```bash
-cd Bike-Network-System
+cd PlataformaRentaBicicletasPromCiclismo
 ```
 
 ---
